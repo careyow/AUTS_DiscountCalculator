@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Calculator</title>
+    <meta name="theme-color" content="#EFE3CC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Discount Calculator">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <script src="assets/vendor/jspdf.umd.min.js" defer></script>
+    <script src="assets/vendor/jspdf.plugin.autotable.min.js" defer></script>
+    <script src="js/script.js" defer></script>
+    <script src="js/pwa.js" defer></script>
+  </head>
+  <body>
+    <main class="calculator" id="discount-calculator">
+      <header class="calculator__header">
+        <img
+          class="calculator__logo"
+          src="assets/ANYTHING%20UNDER%20THE%20SUN.png"
+          alt="Anything Under the Sun logo"
+        >
+        <h1 class="calculator__title">DISCOUNT CALCULATOR</h1>
+      </header>
+
+      <section class="calculator__section" aria-labelledby="original-price-heading">
+        <div class="calculator__section-heading">
+          <h2 class="calculator__section-title" id="original-price-heading">Original Price</h2>
+          <button
+            class="history-toggle"
+            id="history-toggle"
+            type="button"
+            aria-label="Toggle discount history"
+            aria-controls="history-panel"
+            aria-expanded="false"
+          >
+            <svg class="history-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3.5 11a8.5 8.5 0 1 1 2.49 6.01M3.5 11V5.5M3.5 11H9m3-4v5l3.25 1.75" />
+            </svg>
+            <span>History</span>
+          </button>
+        </div>
+        <label class="calculator__field-label" for="product-name">Product Name</label>
+        <div class="calculator__input-group">
+          <input
+            class="calculator__input"
+            id="product-name"
+            name="productName"
+            type="text"
+            autocomplete="off"
+            aria-required="true"
+            placeholder="Enter product name"
+          >
+        </div>
+        <label class="calculator__field-label calculator__field-label--spaced" for="original-price">Product price</label>
+        <div class="calculator__input-group">
+          <span class="calculator__input-indicator" aria-hidden="true">₱</span>
+          <input
+            class="calculator__input"
+            id="original-price"
+            name="originalPrice"
+            type="number"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            placeholder="0.00"
+          >
+        </div>
+      </section>
+
+      <section class="calculator__section" aria-labelledby="discount-heading">
+        <div class="calculator__section-heading">
+          <h2 class="calculator__section-title" id="discount-heading">Select Discount</h2>
+          <button class="preset-edit-button" id="edit-presets" type="button" aria-controls="preset-dialog" aria-expanded="false">
+            <svg class="preset-edit-button__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" />
+              <path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z" />
+            </svg>
+            <span>Edit Presets</span>
+          </button>
+        </div>
+        <div class="calculator__discount-options" role="group" aria-label="Preset discounts">
+          <button class="calculator__discount-button" id="discount-preset-1" type="button" data-discount="5">5%</button>
+          <button class="calculator__discount-button" id="discount-preset-2" type="button" data-discount="10">10%</button>
+          <button class="calculator__discount-button" id="discount-preset-3" type="button" data-discount="15">15%</button>
+          <button class="calculator__discount-button" id="discount-preset-4" type="button" data-discount="20">20%</button>
+        </div>
+
+        <div class="calculator__divider" aria-hidden="true">
+          <span class="calculator__divider-line"></span>
+          <span class="calculator__divider-label">OR</span>
+          <span class="calculator__divider-line"></span>
+        </div>
+
+        <label class="calculator__field-label" for="custom-discount">Custom Percentage</label>
+        <div class="calculator__input-group">
+          <input
+            class="calculator__input"
+            id="custom-discount"
+            name="customDiscount"
+            type="number"
+            min="0"
+            max="100"
+            step="0.01"
+            inputmode="decimal"
+            placeholder="0"
+          >
+          <span class="calculator__input-indicator" aria-hidden="true">%</span>
+        </div>
+      </section>
+
+      <section class="calculator__results" aria-label="Discount results" aria-live="polite">
+        <div class="calculator__result">
+          <span class="calculator__result-label">You Save</span>
+          <output class="calculator__result-value" id="discount-amount" for="original-price custom-discount">₱0.00</output>
+        </div>
+        <div class="calculator__result">
+          <span class="calculator__result-label">Final Price</span>
+          <output class="calculator__result-value" id="final-price" for="original-price custom-discount">₱0.00</output>
+        </div>
+      </section>
+
+      <button class="history-save-button" id="save-to-history" type="button">
+        Save to History
+      </button>
+      <p class="history-notification" id="history-notification" role="status" aria-live="polite" hidden></p>
+
+      <button class="calculator__clear-button" id="clear-calculator" type="button">Clear Calculator</button>
+    </main>
+
+    <div class="history-backdrop" id="history-backdrop" aria-hidden="true"></div>
+    <aside
+      class="history-panel"
+      id="history-panel"
+      aria-labelledby="history-panel-title"
+      aria-hidden="true"
+      inert
+    >
+      <header class="history-panel__header">
+        <h2 class="history-panel__title" id="history-panel-title">Discount History</h2>
+        <button class="history-panel__close" id="history-close" type="button" aria-label="Close history">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </header>
+      <div class="history-panel__list" id="history-list" aria-live="polite">
+        <div class="history-empty">
+          <span class="history-empty__icon" aria-hidden="true">◷</span>
+          <p>No discount history yet.</p>
+        </div>
+      </div>
+      <footer class="history-panel__footer">
+        <p class="history-export-status" id="history-export-status" role="status" aria-live="polite" hidden></p>
+        <button class="history-export-button" id="export-history-pdf" type="button">
+          <svg class="history-export-button__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
+            <path d="M14 3.5V8h4M12 11v6m-2.5-2.5L12 17l2.5-2.5M9 10h1m4 0h1" />
+          </svg>
+          <span>Export History as PDF</span>
+        </button>
+        <button class="history-clear-button" id="clear-history" type="button" disabled>
+          Clear History
+        </button>
+      </footer>
+    </aside>
+
+    <dialog
+      class="history-confirm-dialog"
+      id="history-confirm-dialog"
+      aria-labelledby="history-confirm-title"
+      aria-describedby="history-confirm-message history-confirm-warning"
+    >
+      <div class="history-confirm-dialog__content">
+        <header class="history-confirm-dialog__header">
+          <span class="history-confirm-dialog__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M4 7h16M9 7V4h6v3m3 0-.8 13H6.8L6 7m4 3v6m4-6v6" />
+            </svg>
+          </span>
+          <h2 class="history-confirm-dialog__title" id="history-confirm-title">Discount History</h2>
+        </header>
+        <p class="history-confirm-dialog__message" id="history-confirm-message">
+          Are you sure you want to clear all saved discount history?
+        </p>
+        <p class="history-confirm-dialog__warning" id="history-confirm-warning">
+          This action cannot be undone.
+        </p>
+        <p class="history-confirm-dialog__error" id="history-confirm-error" role="alert" hidden></p>
+        <footer class="history-confirm-dialog__actions">
+          <button class="history-confirm-dialog__cancel" id="cancel-clear-history" type="button">Cancel</button>
+          <button class="history-confirm-dialog__confirm" id="confirm-clear-history" type="button">Clear History</button>
+        </footer>
+      </div>
+    </dialog>
+
+    <dialog class="preset-dialog" id="preset-dialog" aria-labelledby="preset-dialog-title">
+      <div class="preset-dialog__content">
+        <header class="preset-dialog__header">
+          <h2 class="preset-dialog__title" id="preset-dialog-title">Customize Discount Presets</h2>
+          <p>Enter a percentage greater than 0 and up to 100.</p>
+        </header>
+
+        <div class="preset-dialog__fields">
+          <div class="preset-field">
+            <label class="preset-field__label" for="preset-value-1">Preset 1</label>
+            <div class="preset-field__input-group">
+              <input class="preset-field__input" id="preset-value-1" type="number" min="0" max="100" step="any" value="5" inputmode="decimal">
+              <span aria-hidden="true">%</span>
+            </div>
+          </div>
+          <div class="preset-field">
+            <label class="preset-field__label" for="preset-value-2">Preset 2</label>
+            <div class="preset-field__input-group">
+              <input class="preset-field__input" id="preset-value-2" type="number" min="0" max="100" step="any" value="10" inputmode="decimal">
+              <span aria-hidden="true">%</span>
+            </div>
+          </div>
+          <div class="preset-field">
+            <label class="preset-field__label" for="preset-value-3">Preset 3</label>
+            <div class="preset-field__input-group">
+              <input class="preset-field__input" id="preset-value-3" type="number" min="0" max="100" step="any" value="15" inputmode="decimal">
+              <span aria-hidden="true">%</span>
+            </div>
+          </div>
+          <div class="preset-field">
+            <label class="preset-field__label" for="preset-value-4">Preset 4</label>
+            <div class="preset-field__input-group">
+              <input class="preset-field__input" id="preset-value-4" type="number" min="0" max="100" step="any" value="20" inputmode="decimal">
+              <span aria-hidden="true">%</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="preset-dialog__message" id="preset-dialog-message" role="status" aria-live="polite" hidden></p>
+
+        <footer class="preset-dialog__footer">
+          <button class="preset-dialog__restore" id="restore-preset-defaults" type="button">Restore Defaults</button>
+          <div class="preset-dialog__actions">
+            <button class="preset-dialog__cancel" id="cancel-preset-changes" type="button">Cancel</button>
+            <button class="preset-dialog__save" id="save-preset-changes" type="button">Save Changes</button>
+          </div>
+        </footer>
+      </div>
+    </dialog>
+  </body>
+</html>
