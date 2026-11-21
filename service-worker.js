@@ -1,10 +1,10 @@
-const CACHE_NAME = "anything-under-the-sun-discount-calculator-v1";
+const CACHE_NAME = "anything-under-the-sun-discount-calculator-v2";
 const APP_SHELL_URLS = [
   "./index.html",
   "./css/style.css",
   "./js/script.js",
   "./js/pwa.js",
-  "./manifest.webmanifest",
+  "./manifest.json",
   "./assets/ANYTHING%20UNDER%20THE%20SUN.png",
   "./assets/icons/apple-touch-icon.png",
   "./assets/icons/icon-192.png",

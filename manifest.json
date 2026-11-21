@@ -1,11 +1,12 @@
 {
-  "id": "./index.html",
-  "name": "Anything Under The Sun Discount Calculator",
-  "short_name": "Discount Calculator",
-  "description": "Calculate product discounts and keep a private discount history.",
-  "start_url": "./index.html",
-  "scope": "./",
+  "id": "https://careyow.github.io/AUTS_DiscountCalculator/",
+  "name": "Anything Under The Sun",
+  "short_name": "Anything Under The Sun",
+  "description": "Discount Calculator for Anything Under The Sun.",
+  "start_url": "https://careyow.github.io/AUTS_DiscountCalculator/",
+  "scope": "https://careyow.github.io/AUTS_DiscountCalculator/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#F8F4EA",
   "theme_color": "#EFE3CC",
   "icons": [
